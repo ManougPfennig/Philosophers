@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mapfenni <mapfenni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/14 16:56:30 by mapfenni          #+#    #+#             */
-/*   Updated: 2023/09/14 19:24:33 by mapfenni         ###   ########.fr       */
+/*   Created: 2023/09/29 15:31:44 by mapfenni          #+#    #+#             */
+/*   Updated: 2023/10/04 12:12:39 by mapfenni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-void	parsing_error(void)
+void	*philo_routine(void *ptr)
 {
-	printf(ERROR_ARG);
-	exit(EXIT_FAILURE);
-}
+	t_val	*data;
 
-void	parsing(int ac, char **av)
-{
-	(void)av;
-	if (ac < 5 || ac > 6)
-		parsing_error();
+	data = ptr;
+	printf("hello i am philo %d\n", data->philo->number);
+	printf("ok\n");
+	return(NULL);
 }
