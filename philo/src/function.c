@@ -1,23 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   routine.c                                          :+:      :+:    :+:   */
+/*   function.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mapfenni <mapfenni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/29 15:31:44 by mapfenni          #+#    #+#             */
-/*   Updated: 2023/10/04 12:12:39 by mapfenni         ###   ########.fr       */
+/*   Created: 2023/10/09 13:07:24 by mapfenni          #+#    #+#             */
+/*   Updated: 2023/10/09 13:09:57 by mapfenni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-void	*philo_routine(void *ptr)
+long long	my_atoll(char *str)
 {
-	t_val	*data;
+	long long	ret;
+	int			i;
 
-	data = ptr;
-	printf("hello i am philo %d\n", data->philo->number);
-	printf("ok\n");
-	return(NULL);
+	ret = 0;
+	i = 0;
+	while (str[i])
+	{
+		ret *= 10;
+		ret += str[i] - '0';
+		i++;
+	}
+	return (ret);
+}
+
+int	my_atoi(char *str)
+{
+	int	ret;
+	int	i;
+
+	ret = 0;
+	i = 0;
+	while (str[i])
+	{
+		ret *= 10;
+		ret += str[i] - '0';
+		i++;
+	}
+	return (ret);
 }

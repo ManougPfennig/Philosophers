@@ -1,60 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_struct.c                                      :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mapfenni <mapfenni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/15 11:08:44 by mapfenni          #+#    #+#             */
-/*   Updated: 2023/09/15 11:54:02 by mapfenni         ###   ########.fr       */
+/*   Created: 2023/10/07 13:16:45 by mapfenni          #+#    #+#             */
+/*   Updated: 2023/10/09 13:34:04 by mapfenni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-long long	my_atoll(char *str)
+void	left_right(int *left, int *right, int philo_n, int all_philo)
 {
-	int			i;
-	long long	ret;
-
-	ret = 0;
-	i = 0;
-	while (str && str[i])
-	{
-		ret *= 10;
-		ret += str[i] - '0';
-		i++;
-	}
-	return (ret);
+	*left = philo_n;
+	if (philo_n == all_philo)
+		*right = 0;
+	else
+		*right = philo_n + 1;
 }
 
-int	my_atoi(char *str)
+long long	currenttime(void)
 {
-	int	i;
-	int	ret;
+	struct timeval	temp;
 
-	ret = 0;
-	i = 0;
-	while (str && str[i])
-	{
-		ret *= 10;
-		ret += str[i] - '0';
-		i++;
-	}
-	return (ret);
+	gettimeofday(&temp, NULL);
+	return ((temp.tv_sec * 1000) + (temp.tv_usec / 1000));
 }
 
 int	init_struct(char **av, t_val *data)
 {
-	data->philo_n = my_atoi(av[1]);
+	data->n_philo = my_atoi(av[1]);
 	data->tt_die = my_atoi(av[2]);
 	data->tt_eat = my_atoi(av[3]);
-	data->tt_sleep = my_atoi(av[4]);
-	if (av[5])
-		data->ntt_eat = my_atoi(av[5]);
+	data->tt_sleep = my_atoi(av[3]);
+	if (av[4])
+		data->n_meal = my_atoi(av[4]);
 	else
-		data->ntt_eat = -1;
-	if (data->philo_n < 1)
+		data->n_meal = -1;
+	if (data->n_philo < 1)
 		return (1);
 	return (0);
 }

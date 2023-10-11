@@ -6,13 +6,13 @@
 #    By: mapfenni <mapfenni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/13 18:09:30 by mapfenni          #+#    #+#              #
-#    Updated: 2023/09/29 15:33:29 by mapfenni         ###   ########.fr        #
+#    Updated: 2023/10/09 13:17:34 by mapfenni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
-SRCS = src/main.c src/parsing.c src/init_struct.c src/routine.c
+SRCS = src/main.c src/parsing.c src/init.c src/function.c
 
 OBJS = ${SRCS:.c=.o}
 
