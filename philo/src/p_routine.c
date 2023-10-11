@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   p_routine.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mapfenni <mapfenni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/14 16:57:00 by mapfenni          #+#    #+#             */
-/*   Updated: 2023/10/11 23:33:43 by mapfenni         ###   ########.fr       */
+/*   Created: 2023/10/11 23:18:40 by mapfenni          #+#    #+#             */
+/*   Updated: 2023/10/11 23:44:34 by mapfenni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-int	main(int ac, char **av)
+void	*p_routine(void *ptr)
 {
-	t_val	*data;
-	t_val	temp;
+	t_philo	*p;
 
-	data = &temp;
-	if (parsing(ac, av, data))
-		return (1);
-	if (init_philo(data))
-		return (1);
-	if (start_philo(data))
-		return (1);
+	p = (t_philo *)ptr;
+//	if (p->num % 2)
+//		usleep(15000);
+	while (!p->dead)
+	{
+		pthread_mutex_lock(&p->values->printing);
+		printf("thread %i\n", p->num);
+		pthread_mutex_unlock(&p->values->printing);
+		p->dead = 1;
+	}
 	return (0);
 }
