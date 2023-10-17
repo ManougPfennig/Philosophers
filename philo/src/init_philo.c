@@ -6,19 +6,19 @@
 /*   By: mapfenni <mapfenni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 18:30:52 by mapfenni          #+#    #+#             */
-/*   Updated: 2023/10/11 23:24:45 by mapfenni         ###   ########.fr       */
+/*   Updated: 2023/10/13 17:18:34 by mapfenni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-void	fork_index(t_val *data, int i)
+void	fork_index(t_val *data, t_philo philo[250], int i)
 {
-	data->philo[i].left_i = i;
+	philo[i].left_i = i;
 	if (i + 1 == data->n_philo)
-		data->philo[i].right_i = 0;
+		philo[i].right_i = 0;
 	else
-		data->philo[i].right_i = i + 1;
+		philo[i].right_i = i + 1;
 }
 
 int	init_mutex(t_val *data)
@@ -39,20 +39,19 @@ int	init_mutex(t_val *data)
 	return (0);
 }
 
-int	init_philo(t_val *data)
+int	init_philo(t_philo philo[250], t_val *data)
 {
-	int	i;
+	int		i;
 
 	if (init_mutex(data))
 		return (1);
 	i = 0;
 	while (i != data->n_philo)
 	{
-		data->philo[i].num = i + 1;
-		data->philo[i].n_ate = 0;
-		data->philo[i].dead = 0;
-		fork_index(data, i);
-		data->philo[i].values = data;
+		philo[i].num = i + 1;
+		philo[i].n_ate = 0;
+		philo[i].dead = 0;
+		fork_index(data, philo, i);
 		i++;
 	}
 	return (0);

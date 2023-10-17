@@ -6,7 +6,7 @@
 /*   By: mapfenni <mapfenni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 13:16:45 by mapfenni          #+#    #+#             */
-/*   Updated: 2023/10/11 23:39:52 by mapfenni         ###   ########.fr       */
+/*   Updated: 2023/10/17 17:24:44 by mapfenni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	init_struct(char **av, t_val *data)
 	if (data->n_philo < 1)
 		return (1);
 	data->all_meal_ate = 0;
-	pthread_mutex_init(&data->printf_mutex, NULL);
+	data->all_dead = 0;
+	pthread_mutex_init(&data->printing, NULL);
 	return (0);
 }
