@@ -6,7 +6,7 @@
 /*   By: mapfenni <mapfenni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 16:56:30 by mapfenni          #+#    #+#             */
-/*   Updated: 2023/09/15 11:54:31 by mapfenni         ###   ########.fr       */
+/*   Updated: 2023/10/20 17:45:51 by mapfenni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,10 @@ int	parsing(int ac, char **av, t_val *data)
 	}
 	if (check_values(av))
 		return (parsing_error());
-	if (init_struct(av, data))
+	i = init_struct(av, data);
+	if (i == 1)
 		return (parsing_error());
+	else if (i == 2)
+		return (1);
 	return (0);
 }

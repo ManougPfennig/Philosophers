@@ -6,7 +6,7 @@
 /*   By: mapfenni <mapfenni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:36:52 by mapfenni          #+#    #+#             */
-/*   Updated: 2023/10/17 18:00:45 by mapfenni         ###   ########.fr       */
+/*   Updated: 2023/10/24 17:04:56 by mapfenni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_philo
 	int				left_i;
 	int				right_i;
 	int				dead;
+	int				eating;
 	long long		last_meal;
 	struct s_val	*data;
 	pthread_t		id;
@@ -44,9 +45,12 @@ typedef struct s_val
 	int				all_meal_ate;
 	int				all_dead;
 	long long		start;
+	int				end;
+	pthread_t		supervise;
+	pthread_mutex_t	looper;
 	pthread_mutex_t	printing;
 	pthread_mutex_t	eating;
-	pthread_mutex_t	forks[250];
+	pthread_mutex_t	*forks;
 }				t_val;
 
 
@@ -67,12 +71,13 @@ long long	my_atoll(char *str);
 int			my_atoi(char *str);
 int			my_strlen(char *str);
 void		*p_routine(void *ptr);
-int			init_philo(t_philo philo[250], t_val *data);
+int			init_philo(t_philo *philo, t_val *data);
 long long	currenttime(void);
-int			start_philo(t_philo philo[250], t_val *data);
-void		end_philo(t_philo philo[250], t_val *data);
+int			start_philo(t_philo *philo, t_val *data);
+void		end_philo(t_philo *philo, t_val *data);
 void		*p_routine(void *ptr);
-void		philo_superviser(t_philo p[250], t_val *data);
+void		*philo_superviser(void *ptr);
+int			loop_check(t_philo *p, t_val *data);
 void		write_msg(int num, t_val *d, int msg, t_philo *p);
 
 #endif

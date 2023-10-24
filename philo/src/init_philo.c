@@ -6,13 +6,13 @@
 /*   By: mapfenni <mapfenni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 18:30:52 by mapfenni          #+#    #+#             */
-/*   Updated: 2023/10/13 17:18:34 by mapfenni         ###   ########.fr       */
+/*   Updated: 2023/10/24 17:40:11 by mapfenni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-void	fork_index(t_val *data, t_philo philo[250], int i)
+void	fork_index(t_val *data, t_philo *philo, int i)
 {
 	philo[i].left_i = i;
 	if (i + 1 == data->n_philo)
@@ -26,10 +26,10 @@ int	init_mutex(t_val *data)
 	int	i;
 
 	i = 0;
-
-	while (i != 250)
+	data->forks = malloc((data->n_philo + 1) * sizeof(pthread_mutex_t));
+	while (i != data->n_philo)
 	{
-		if(pthread_mutex_init(&data->forks[i], NULL) != 0)
+		if(pthread_mutex_init(data->forks + i, NULL) != 0)
 		{
 			printf("Error occured while initialising mutex : Exiting\n");
 			return (1);
@@ -39,7 +39,7 @@ int	init_mutex(t_val *data)
 	return (0);
 }
 
-int	init_philo(t_philo philo[250], t_val *data)
+int	init_philo(t_philo *philo, t_val *data)
 {
 	int		i;
 
@@ -51,6 +51,7 @@ int	init_philo(t_philo philo[250], t_val *data)
 		philo[i].num = i + 1;
 		philo[i].n_ate = 0;
 		philo[i].dead = 0;
+		philo[i].eating = 0;
 		fork_index(data, philo, i);
 		i++;
 	}

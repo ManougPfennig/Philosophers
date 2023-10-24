@@ -6,79 +6,91 @@
 /*   By: mapfenni <mapfenni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 15:54:20 by mapfenni          #+#    #+#             */
-/*   Updated: 2023/10/17 18:44:03 by mapfenni         ###   ########.fr       */
+/*   Updated: 2023/10/24 17:31:04 by mapfenni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-int	death(t_philo *philo, t_val *data)
+int	loop_check(t_philo *p, t_val *data)
 {
-	write_msg(philo->num, data, 5, philo);
-	philo->dead = 1;
+	pthread_mutex_lock(&data->looper);
+	if (data->all_dead || data->all_meal_ate || p->dead || data->end)
+	{
+		pthread_mutex_unlock(&data->looper);
+		return (0);
+	}
+	else
+		pthread_mutex_unlock(&data->looper);
 	return (1);
 }
 
-int	finished_spaghetti(t_val *data, t_philo p[250])
+void	are_over(t_val *data, t_philo *p)
 {
 	int	i;
+	int	death;
 	int	full;
 
 	i = 0;
+	death = 0;
 	full = 0;
-	if (data->n_meal == -1)
-		return (0);
 	while (i != data->n_philo)
 	{
-		if (p[i].n_ate == data->n_meal)
+		if (p[i].dead)
+			death++;
+		if (p[i].n_ate >= data->n_meal || p[i].dead)
 			full++;
 		i++;
 	}
-	if (full == i)
-		return (1);
-	return (0);
+	pthread_mutex_lock(&data->looper);
+	if (data->n_meal == -1)
+		full = -1;
+	if (death == data->n_philo)
+		data->all_dead = 1;
+	if (full == data->n_philo)
+		data->all_meal_ate = 1;
+	pthread_mutex_unlock(&data->looper);
 }
 
-int	are_dead(t_val *data, t_philo p[250])
+int	is_dead(t_philo *p, t_val *data)
 {
-	int	i;
-	int	dead;
-
-	i = 0;
-	dead = 0;
-	while (i != data->n_philo)
+	pthread_mutex_lock(&data->looper);
+	if (p->eating)
 	{
-		if (p[i].dead == 1)
-			dead++;
-		i++;
+		pthread_mutex_unlock(&data->looper);
+		return (0);
 	}
-	if (dead == i)
+	if (!p->dead && currenttime() - p->last_meal >= data->tt_die)
+	{
+		p->dead = 1;
+		if (data->n_meal == -1)
+			data->end++;
+		pthread_mutex_unlock(&data->looper);
 		return (1);
+	}
+	pthread_mutex_unlock(&data->looper);
 	return (0);
 }
 
-void	philo_superviser(t_philo p[250], t_val *data)
+void	*philo_superviser(void *ptr)
 {
 	int	i;
+	t_philo *p;
+	t_val *data;
 
-	while (data->all_meal_ate == 0 && data->all_dead == 0)
+	p = (t_philo *)ptr;
+	data = p->data;
+	while (data->start == 0)
+		usleep(10);
+	while (!data->all_dead && !data->all_meal_ate && !data->end)
 	{
 		i = -1;
-		if (data->all_meal_ate || data->all_dead)
-			break ;
-		while (++i != data->n_philo)
+		while (!data->end && ++i != data->n_philo)
 		{
-			pthread_mutex_lock(&data->eating);
-			if (currenttime() - p[i].last_meal > data->tt_die && p[i].dead == 0)
-			{
-				death(&p[i], data);
-				if (data->n_meal == -1)
-					data->all_dead = 1;
-			}
-			pthread_mutex_unlock(&(data->eating));
+			if (is_dead(p + i, data))
+				write_msg(p[i].num, data, 5, p + i);
 		}
-		usleep(10);
-		data->all_meal_ate = finished_spaghetti(data, p);
-		data->all_dead = are_dead(data, p);
+		are_over(data, p);
 	}
+	return (NULL);
 }
