@@ -6,7 +6,7 @@
 /*   By: mapfenni <mapfenni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:36:52 by mapfenni          #+#    #+#             */
-/*   Updated: 2023/10/24 17:04:56 by mapfenni         ###   ########.fr       */
+/*   Updated: 2023/10/24 21:42:20 by mapfenni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int			start_philo(t_philo *philo, t_val *data);
 void		end_philo(t_philo *philo, t_val *data);
 void		*p_routine(void *ptr);
 void		*philo_superviser(void *ptr);
+void		philo_wait(long long tt_wait);
 int			loop_check(t_philo *p, t_val *data);
 void		write_msg(int num, t_val *d, int msg, t_philo *p);
 

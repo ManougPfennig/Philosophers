@@ -6,11 +6,20 @@
 /*   By: mapfenni <mapfenni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 15:54:20 by mapfenni          #+#    #+#             */
-/*   Updated: 2023/10/24 17:31:04 by mapfenni         ###   ########.fr       */
+/*   Updated: 2023/10/24 22:02:35 by mapfenni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+
+void	philo_wait(long long tt_wait)
+{
+	long long	time_ref;
+
+	time_ref = currenttime();
+	while (currenttime() - time_ref <= tt_wait)
+		usleep(50);
+}
 
 int	loop_check(t_philo *p, t_val *data)
 {
@@ -20,8 +29,7 @@ int	loop_check(t_philo *p, t_val *data)
 		pthread_mutex_unlock(&data->looper);
 		return (0);
 	}
-	else
-		pthread_mutex_unlock(&data->looper);
+	pthread_mutex_unlock(&data->looper);
 	return (1);
 }
 
@@ -31,16 +39,15 @@ void	are_over(t_val *data, t_philo *p)
 	int	death;
 	int	full;
 
-	i = 0;
 	death = 0;
 	full = 0;
-	while (i != data->n_philo)
+	i = -1;
+	while (++i != data->n_philo)
 	{
 		if (p[i].dead)
 			death++;
 		if (p[i].n_ate >= data->n_meal || p[i].dead)
 			full++;
-		i++;
 	}
 	pthread_mutex_lock(&data->looper);
 	if (data->n_meal == -1)
@@ -64,7 +71,7 @@ int	is_dead(t_philo *p, t_val *data)
 	{
 		p->dead = 1;
 		if (data->n_meal == -1)
-			data->end++;
+			data->end = 1;
 		pthread_mutex_unlock(&data->looper);
 		return (1);
 	}
@@ -92,5 +99,6 @@ void	*philo_superviser(void *ptr)
 		}
 		are_over(data, p);
 	}
+	data->end = 1;
 	return (NULL);
 }

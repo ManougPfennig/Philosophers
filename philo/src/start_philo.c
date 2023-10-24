@@ -6,7 +6,7 @@
 /*   By: mapfenni <mapfenni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 20:36:58 by mapfenni          #+#    #+#             */
-/*   Updated: 2023/10/24 17:45:27 by mapfenni         ###   ########.fr       */
+/*   Updated: 2023/10/24 21:57:28 by mapfenni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	start_philo(t_philo *philo, t_val *data)
 	int	i;
 
 	i = 0;
-	data->start = 0;
 	data->start = currenttime();
 	while(i != data->n_philo)
 	{
@@ -41,25 +40,25 @@ int	start_philo(t_philo *philo, t_val *data)
 
 void	end_philo(t_philo *philo, t_val *data)
 {
-	int	i;
+	int		i;
 
-	i = 0;
 	pthread_join(data->supervise, NULL);
-	while (i != data->n_philo)
+	i = -1;
+	while (++i != data->n_philo)
+		pthread_mutex_unlock(data->forks + i);
+	i = -1;
+	while (++i != data->n_philo)
 	{
+		pthread_join(philo[i].id, NULL);
 		pthread_detach(philo[i].id);
-		i++;
 	}
-	i = 0;
-	while (i != data->n_philo)
-	{
+	free(philo);
+	i = -1;
+	while (++i != data->n_philo)
 		pthread_mutex_destroy(&data->forks[i]);
-		i++;
-	}
 	pthread_mutex_destroy(&data->eating);
 	pthread_mutex_destroy(&data->printing);
 	pthread_mutex_destroy(&data->looper);
-	free(philo);
 	free(data->forks);
 	return ;
 }

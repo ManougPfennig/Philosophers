@@ -6,7 +6,7 @@
 /*   By: mapfenni <mapfenni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 16:57:00 by mapfenni          #+#    #+#             */
-/*   Updated: 2023/10/23 19:35:07 by mapfenni         ###   ########.fr       */
+/*   Updated: 2023/10/24 18:24:28 by mapfenni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int ac, char **av)
 	data = &temp;
 	philo = NULL;
 	if (parsing(ac, av, data))
-		return (1);
+		return (0);
 	philo = malloc((data->n_philo) * sizeof(t_philo));
 	if (!philo)
 		return (printf("Malloc error while initialising philo : Exiting\n"));

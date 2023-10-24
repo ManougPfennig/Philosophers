@@ -6,7 +6,7 @@
 /*   By: mapfenni <mapfenni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 18:30:52 by mapfenni          #+#    #+#             */
-/*   Updated: 2023/10/24 17:40:11 by mapfenni         ###   ########.fr       */
+/*   Updated: 2023/10/24 21:24:07 by mapfenni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	init_mutex(t_val *data)
 	int	i;
 
 	i = 0;
-	data->forks = malloc((data->n_philo + 1) * sizeof(pthread_mutex_t));
+	data->forks = malloc((data->n_philo) * sizeof(pthread_mutex_t));
 	while (i != data->n_philo)
 	{
 		if(pthread_mutex_init(data->forks + i, NULL) != 0)

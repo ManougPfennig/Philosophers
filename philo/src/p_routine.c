@@ -6,7 +6,7 @@
 /*   By: mapfenni <mapfenni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 23:18:40 by mapfenni          #+#    #+#             */
-/*   Updated: 2023/10/24 17:51:51 by mapfenni         ###   ########.fr       */
+/*   Updated: 2023/10/24 22:02:37 by mapfenni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,20 @@ void	write_msg(int num, t_val *d, int msg, t_philo *p)
 	pthread_mutex_unlock(&d->printing);
 }
 
-void	philo_wait(long long tt_wait)
+int	is_lonely(t_philo *p, t_val *data)
 {
-	long long	time_ref;
-
-	time_ref = currenttime();
-	while (currenttime() - time_ref <= tt_wait)
+	pthread_mutex_unlock(&data->forks[p->left_i]);
+	while (!p->dead)
 		usleep(50);
+	return (1);
 }
 
 void	philo_eating(t_philo *p, t_val *data)
 {
 	pthread_mutex_lock(&data->forks[p->left_i]);
 	write_msg(p->num, data, 1, p);
+//	if (data->n_philo == 1 && is_lonely(p, data))
+//		return ;
 	pthread_mutex_lock(&data->forks[p->right_i]);
 	write_msg(p->num, data, 1, p);
 	write_msg(p->num, data, 2, p);
