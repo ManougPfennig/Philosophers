@@ -6,7 +6,7 @@
 /*   By: mapfenni <mapfenni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:36:52 by mapfenni          #+#    #+#             */
-/*   Updated: 2023/10/24 21:42:20 by mapfenni         ###   ########.fr       */
+/*   Updated: 2023/10/24 22:08:43 by mapfenni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <sys/time.h>
 # include <pthread.h>
 
-struct s_val;
+struct	s_val;
 
 typedef struct s_philo
 {
@@ -52,7 +52,6 @@ typedef struct s_val
 	pthread_mutex_t	eating;
 	pthread_mutex_t	*forks;
 }				t_val;
-
 
 # define ERROR_ARG	"Launch program with following arguments :\n\
 --	./philo [1][2][3][4][5]\n\

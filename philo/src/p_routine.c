@@ -6,7 +6,7 @@
 /*   By: mapfenni <mapfenni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 23:18:40 by mapfenni          #+#    #+#             */
-/*   Updated: 2023/10/24 22:02:37 by mapfenni         ###   ########.fr       */
+/*   Updated: 2023/10/24 22:09:00 by mapfenni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ void	philo_eating(t_philo *p, t_val *data)
 {
 	pthread_mutex_lock(&data->forks[p->left_i]);
 	write_msg(p->num, data, 1, p);
-//	if (data->n_philo == 1 && is_lonely(p, data))
-//		return ;
 	pthread_mutex_lock(&data->forks[p->right_i]);
 	write_msg(p->num, data, 1, p);
 	write_msg(p->num, data, 2, p);

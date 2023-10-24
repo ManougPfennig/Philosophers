@@ -6,7 +6,7 @@
 /*   By: mapfenni <mapfenni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 18:30:52 by mapfenni          #+#    #+#             */
-/*   Updated: 2023/10/24 21:24:07 by mapfenni         ###   ########.fr       */
+/*   Updated: 2023/10/24 22:09:40 by mapfenni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	init_mutex(t_val *data)
 	data->forks = malloc((data->n_philo) * sizeof(pthread_mutex_t));
 	while (i != data->n_philo)
 	{
-		if(pthread_mutex_init(data->forks + i, NULL) != 0)
+		if (pthread_mutex_init(data->forks + i, NULL) != 0)
 		{
 			printf("Error occured while initialising mutex : Exiting\n");
 			return (1);

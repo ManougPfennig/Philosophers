@@ -6,7 +6,7 @@
 /*   By: mapfenni <mapfenni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 15:54:20 by mapfenni          #+#    #+#             */
-/*   Updated: 2023/10/24 22:02:35 by mapfenni         ###   ########.fr       */
+/*   Updated: 2023/10/24 22:10:39 by mapfenni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,9 @@ int	is_dead(t_philo *p, t_val *data)
 
 void	*philo_superviser(void *ptr)
 {
-	int	i;
-	t_philo *p;
-	t_val *data;
+	int		i;
+	t_philo	*p;
+	t_val	*data;
 
 	p = (t_philo *)ptr;
 	data = p->data;
