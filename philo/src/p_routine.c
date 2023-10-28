@@ -6,7 +6,7 @@
 /*   By: mapfenni <mapfenni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 23:18:40 by mapfenni          #+#    #+#             */
-/*   Updated: 2023/10/24 22:09:00 by mapfenni         ###   ########.fr       */
+/*   Updated: 2023/10/28 12:49:44 by mapfenni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ void	philo_eating(t_philo *p, t_val *data)
 	write_msg(p->num, data, 2, p);
 	p->eating = 1;
 	p->n_ate++;
-	philo_wait(data->tt_eat);
 	p->last_meal = currenttime();
+	philo_wait(data->tt_eat);
 	p->eating = 0;
 	pthread_mutex_unlock(&data->forks[p->left_i]);
 	pthread_mutex_unlock(&data->forks[p->right_i]);
